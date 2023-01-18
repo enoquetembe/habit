@@ -1,11 +1,10 @@
 import Fastify from 'fastify'
-import { PrismaClient } from '@prisma/client'
+import {prisma} from './lib/prisma'
 import cors from '@fastify/cors'
 
 const app = Fastify()
 app.register(cors)
 
-const prisma = new PrismaClient()
 
 app.get('/habit', async () => {
  const habits = await prisma.habit.findMany()
