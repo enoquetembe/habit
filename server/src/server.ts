@@ -7,14 +7,8 @@ app.register(cors)
 
 const prisma = new PrismaClient()
 
-app.get('/habit', () => {
- const habits = prisma.habit.findMany({
-  where: {
-    title: {
-      startsWith: 'Codar'
-    }
-  }
- })
+app.get('/habit', async () => {
+ const habits = await prisma.habit.findMany()
 
  return habits
 })
