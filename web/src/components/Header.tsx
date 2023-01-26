@@ -11,7 +11,7 @@ export function Header() {
       <Dialog.Root>
         <Dialog.Trigger 
           type='button'
-          className='flex items-center gap-3 px-6 py-4 border border-violet-500 rounded-lg hover:border-violet-300'
+          className='flex items-center gap-3 px-6 py-4 border border-violet-500 rounded-lg hover:border-violet-300 transition-colors'
         >
           <Plus className='text-violet-500'/> New habit
         </Dialog.Trigger>
