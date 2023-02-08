@@ -10,45 +10,55 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String  @id @default(uuid())
+  username  String  @unique()
+  hash      String
+  my_habits Habit[]
+  days      Day[]
+
+  @@map("users")
+}
 model Habit {
-  id            String          @id @default(uuid())
-  title         String
-  created_at    DateTime
-  dayHabits     DayHabit[]
-  weekDays HabitWeekDays[]
+  id         String         @id @default(uuid())
+  title      String
+  created_at DateTime
+  dayHabits  DayHabit[]
+  weekDays   HabitWeekDay[]
+  user_id    String
+  user       User           @relation(fields: [user_id], references: [id])
 
   @@map("habits")
+}
+
+model HabitWeekDay {
+  id       String @id @default(uuid())
+  habit_id String
+  week_day Int
+  habit    Habit  @relation(fields: [habit_id], references: [id])
+
+  @@unique([habit_id, week_day])
+  @@map("habit_week_days")
 }
 
 model Day {
   id        String     @id @default(uuid())
   date      DateTime
   dayHabits DayHabit[]
+  user_id   String
+  user      User       @relation(fields: [user_id], references: [id])
 
-  @@unique([date])
+  @@unique([date, user_id])
   @@map("days")
 }
 
 model DayHabit {
   id       String @id @default(uuid())
-  habit_id String
   day_id   String
-
-  day   Day   @relation(fields: [day_id], references: [id])
-  habit Habit @relation(fields: [habit_id], references: [id])
+  habit_id String
+  day      Day    @relation(fields: [day_id], references: [id])
+  habit    Habit  @relation(fields: [habit_id], references: [id])
 
   @@unique([day_id, habit_id])
   @@map("day_habits")
-}
-
-model HabitWeekDays {
-  id       String @id @default(uuid())
-  week_day Int
-  habit_id String
-
-  habit   Habit  @relation(fields: [habit_id], references: [id])
-  
-
-  @@unique([habit_id, week_day])
-  @@map("habit_week_days")
 }

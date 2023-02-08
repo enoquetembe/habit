@@ -4,24 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx tsx watch src/server.ts"
+    "dev": "tsx watch src/server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@fastify/cors": "^8.2.0",
-    "@prisma/client": "^4.8.1",
+    "@fastify/env": "^4.2.0",
+    "@fastify/jwt": "^6.5.0",
+    "@prisma/client": "^4.9.0",
     "dayjs": "^1.11.7",
-    "fastify": "^4.11.0",
+    "fastify": "^4.12.0",
+    "fastify-bcrypt": "^1.0.1",
     "zod": "^3.20.2"
   },
   "devDependencies": {
-    "prisma": "^4.8.1",
+    "prisma": "^4.9.0",
     "tsx": "^3.12.2",
     "typescript": "^4.9.4"
-  },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
   }
 }

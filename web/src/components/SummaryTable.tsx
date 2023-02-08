@@ -1,76 +1,88 @@
-import { useState, useEffect } from 'react'
-
-import { HabitDay } from './HabitDay'
-import {generateDateFromYearBeginning} from '../utils/generate-date-from-year-beginning'
-
-import { api } from '../lib/axios'
 import dayjs from 'dayjs'
+import { useEffect, useState } from 'react'
+import { api } from '../lib/axios'
+import { weekDays } from '../utils/constants'
+import { generateDatesFromYearBeginning } from '../utils/generate-dates-from-year-beginning'
+import SummaryItem from './SummaryItem'
+import { WeekDay } from './WeekDay'
 
-const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+const summaryDates = generateDatesFromYearBeginning()
+const minimumSummaryDatesSize = 18 * 7
+const amountOfDaysToFill = minimumSummaryDatesSize - summaryDates.length
 
-const summaryDates= generateDateFromYearBeginning()
-
-const minimumSummaryDateSize = 18*7
-const amountOfDaysToFill = minimumSummaryDateSize - summaryDates.length
-
-type Summary = {
-  id: string,
-  date: string,
-  amount: number,
+export interface ISummary {
+  id: string
+  date: string
   completed: number
-}[]
+  amount: number
+}
+
+let timeoutId: number | null
 
 export function SummaryTable() {
+  const [summary, setSummary] = useState<ISummary[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const [summary, setSummary] = useState<Summary>([])
+  const fetchSummary = async () => {
+    try {
+      const res = await api.get<ISummary[]>('/summary')
+      setSummary(res.data)
+    } catch (error) {
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    api.get('summary').then(response => {
-      setSummary(response.data)
-    })
+    if (timeoutId) {
+      clearTimeout(timeoutId)
+      timeoutId = null
+    }
+
+    timeoutId = setTimeout(() => {
+      fetchSummary()
+    }, 500)
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+        timeoutId = null
+      }
+    }
   }, [])
 
-  return(
-    <div className='w-full flex'>
+  return (
+    <div className='flex w-full'>
       <div className='grid grid-rows-7 grid-flow-row gap-3'>
-        {
-          weekDays.map((weekDay, i) => {
-            return <div key={`${weekDay}-${i}`} className='text-zinc-400 text-xl font-bold h-10 w-10 flex justify-center items-center'>
-              {weekDay}
-              </div>
-          })
-        }
+        {weekDays.map((weekDay, index) => (
+          <WeekDay label={weekDay} key={index} />
+        ))}
       </div>
 
-      <div className='grid grid-rows-7 grid-flow-col gap-3'>
-        {
-          summary.length > 0 && summaryDates.map(date => {
-            const dayInSummary = summary.find(day => {
+      {loading ? null : (
+        <div className='grid grid-rows-7 grid-flow-col gap-3 '>
+          {summaryDates.map((date) => {
+            const dayInSummary = summary.find((day) => {
               return dayjs(date).isSame(day.date, 'day')
             })
 
             return (
-              <HabitDay
+              <SummaryItem
                 key={date.toString()}
                 date={date}
                 amount={dayInSummary?.amount}
                 defaultCompleted={dayInSummary?.completed}
               />
             )
-          })
-        }
+          })}
 
-        {
-          amountOfDaysToFill > 0 && Array.from({length: amountOfDaysToFill}).map((_, i) => {
-            return (
-              <div 
-                key={i} 
-                className='w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg opacity-40 cursor-not-allowed'
-              />
-            )
-          })
-        }
-      </div>
+          {Array.from({ length: amountOfDaysToFill }).map((_, index) => (
+            <SummaryItem key={index} future />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
+
+export default SummaryTable
