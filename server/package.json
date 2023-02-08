@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch src/server.ts",
+    "tbuild": "node src/server.js",
+    "build": "tsc",
+    "start": "pm2-runtime start ecosystem.config.js --env production "
   },
   "keywords": [],
   "author": "",
@@ -17,6 +20,7 @@
     "dayjs": "^1.11.7",
     "fastify": "^4.12.0",
     "fastify-bcrypt": "^1.0.1",
+    "pm2": "^5.2.2",
     "zod": "^3.20.2"
   },
   "devDependencies": {
