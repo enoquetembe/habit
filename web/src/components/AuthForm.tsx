@@ -19,7 +19,7 @@ export function AuthForm({ panel }: AuthFormProps) {
       event.preventDefault()
 
       if (!username || !password) {
-        return
+        return alert("fill in all fields")
       }
 
       const res = await api.post(panel === 'login' ? '/signin' : '/signup', {
