@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios'
 
 export const api = axios.create({
-  baseURL: "https://habitapi.onrender.com",
+  baseURL: "https://apihabit.onrender.com",
 })
 
 api.interceptors.request.use((request: AxiosRequestConfig) => {
