@@ -37,6 +37,8 @@ This project was developed with the following technologies:
 - <span>[**Vite**](https://vitejs.dev/)</span>
 - <span>[**Node.js**](https://nodejs.org/en/)</span>
 - <span>[**Fastify**](https://www.fastify.io/)</span>
+- <span>[**Prisma**](https://www.prisma.io/)</span>
+- <span>[**SQLite**](https://www.sqlite.org/index.html)</span>
 - <span>[**TypeScript**](https://www.typescriptlang.org/)</span>
 - <span>[**JavaScript**](https://www.javascript.com/) </span>  
 
