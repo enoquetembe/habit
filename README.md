@@ -130,7 +130,7 @@ npm run dev
 <br>
 
 ## 💻 Live Demo
-- You aplication in live through [THIS LINK](https://haditdays.netlify.app/)
+- You can see the application in live through [THIS LINK](https://haditdays.netlify.app/)
 
 <br>
 
