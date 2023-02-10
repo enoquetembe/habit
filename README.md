@@ -45,8 +45,8 @@ This project was developed with the following technologies:
 
 ## 💻 Project
 This project is a habit tracking application, a tool for monitoring habits to put the user's resolutions and goals into practice. 
-An app that registers daily actions and monitors the evolution of the habits that the user intends to put in their 2023 routine.
-We all have goals to achieve this year, and the best way to achieve those goals it is putting into practice habits that will lead us to reach these goals, and this application can be very useful because through it we can track and register our habits to move towards our goals.
+An app that registers daily actions and monitors the evolution of the habits that the user intends to put in their routine.
+We all have goals to achieve, and the best way to achieve those goals it is putting into practice habits that will lead us to reach these goals, and this application can be very useful because through it we can track and register our habits to move towards our goals.
 
 
 
